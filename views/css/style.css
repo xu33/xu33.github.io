@@ -33,17 +33,17 @@ form {
   position: fixed;
   width: 256px;
   z-index: -1;
+  /*transform: translateZ(0);*/
+}
+
+#randomPizzas {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .randomPizzaContainer {
-  float: left;
   display: flex;
-}
-
-.randomPizzaContainer:after {
-  content: "";
-  display: table;
-  clear:both;
 }
 
  .container {
