@@ -17,10 +17,34 @@ module.exports = function(grunt) {
           ext: '.min.css'
         }]
       }
-    }
+    },
+    responsive_images: {
+      dev: {
+        options: {
+          engine: 'im',
+          sizes: [{
+            rename: false,
+            width: 640,
+            quality: 60
+          }]
+        },
+        files: [{
+          expand: true,
+          src: ['*.{gif,jpg,png}'],
+          cwd: 'img/',
+          dest: 'img/release/'
+        }, {
+          expand: true,
+          src: ['*.{gif,jpg,png}'],
+          cwd: 'views/images/',
+          dest: 'views/images/release/'
+        }]
+      }
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.registerTask('default', ['uglify', 'cssmin']);
+  grunt.loadNpmTasks('grunt-responsive-images');
+  grunt.registerTask('default', ['uglify', 'cssmin', 'responsive_images']);
 };
