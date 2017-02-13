@@ -12,10 +12,15 @@
 - I use a variable to hold the body.scrollTop to prevent the forced sync layout;
 - Set the #randomPizzas element to flexbox, set flex-wrap to wrap, remove the floating style of the .randomPizzaContainer element, use the elastic box model to optimize the layout;
 - Modify the resizePizzas function, remove the code to trigger the mandatory synchronization layout;
+- Reduce the number of background pizzas, save the rendering cost;
 
 ##run note
 
 Open https://xu33.github.io/ to view the website.
+
+##How to run this website locally
+
+Double click the index.html to view the page.Click the Cam's Pizzeria link to view the pizza page.
 
 ##use grunt to build assets
 
