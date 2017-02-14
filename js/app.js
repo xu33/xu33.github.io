@@ -35,6 +35,7 @@ $(function() {
 
   var App = {
     markers: [],
+    infowindows: [],
     init: function() {
       var url = FOUR_SQUARE_SERACH + $.param($.extend(QUERY_STRING, {
           query: DEFAULT_QUERY
@@ -53,7 +54,11 @@ $(function() {
         this.keyword = ko.observable('');
         this.venues = ko.observable(venues);
         this.showInfoOnMap = function(item) {
+          var id = item.id;
+          var infowindow = App.infowindows.find(o => o.id == id);
+          var marker = App.markers.find(o => o.id == id);
 
+          infowindow.open(map, marker);
         };
       };
 
@@ -67,19 +72,20 @@ $(function() {
           var venues = data.response.venues;
           vm.venues(venues);
 
-          App.clearMarkers();
+          App.clearMarkersAndWindows();
           App.updateMap(venues);
         })
       }));
 
       ko.applyBindings(vm);
     },
-    clearMarkers: function() {
+    clearMarkersAndWindows: function() {
       this.markers.forEach(function(marker) {
         marker.setMap(null);
       });
 
       this.markers.length = 0;
+      this.infowindows.length = 0;
     },
     clickMarkShowInfowindow: function(marker, infowindow) {
       marker.addListener('click', function() {
@@ -99,6 +105,8 @@ $(function() {
         animation: google.maps.Animation.DROP
       });
 
+      marker.id = veune.id;
+
       App.markers.push(marker);
 
       return marker;
@@ -109,6 +117,9 @@ $(function() {
         content: content
       });
 
+      infowindow.id = veune.id;
+      App.infowindows.push(infowindow);
+
       return infowindow;
     },
     updateMap: function(venues) {
@@ -118,6 +129,11 @@ $(function() {
 
         App.clickMarkShowInfowindow(marker, infowindow);
       });
+
+      var veune = venues[0];
+      var center = new google.maps.LatLng(veune.location.lat, veune.location.lng);
+
+      map.panTo(center);
     }
   };
 
