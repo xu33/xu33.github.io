@@ -7,28 +7,38 @@
 </head>
 <body>
 <div id="sidebar">
+    <!--搜索输入框，绑定keyword字段，并监听其变化-->
     <div>
-        <input type="text" name="" data-bind="value: keyword, valueUpdate: 'afterkeydown'">
+        <input type="text" data-bind="value: keyword, valueUpdate: 'afterkeydown'">
     </div>
+    <!--数据列表，绑定venues-->
     <ul id="list" data-bind="foreach: venues">
-        <li data-bind="text: name, click: $root.showInfoOnMap"></li>
+        <li data-bind="text: name, title: name, click: $root.showInfoOnMap"></li>
     </ul>
 </div>
+<!--地图区域，google地图容器-->
 <div id="map"></div>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAW28WaWGvoyW_FMLBilShlwEfrb7grQzM&callback=initMap"></script>
 <script>
   var map;
 
+  // 初始化地图
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: {
         lat: 30.5931,
         lng: 114.3054
       },
-      zoom: 8
+      zoom: 15
     });
   }
+
+  // 处理加载失败的情况
+  function loadGoogleMapError() {
+    alert('enter here');
+    document.getElementById('map').innerHTML = 'google地图加载失败';
+  }
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAW28WaWGvoyW_FMLBilShlwEfrb7grQzM&callback=initMap" onerror="loadGoogleMapError()"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/knockout.js"></script>
 <script src="js/app.js"></script>
